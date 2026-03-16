@@ -1,0 +1,110 @@
+
+
+Great thinking! Preparing for sponsor questions is just as important as the demo itself. Here are the questions a sponsor would likely ask, grouped by category:
+
+---
+
+## 🔍 1. Understanding the Problem
+
+**"Why hasn't this been solved before? Why are banks still doing this manually?"**
+> XBRL taxonomy structures are highly regulator-specific and change frequently. Generic tools don't understand RBI/MAS specific conventions. Banks ended up building one-off solutions per report because no universal engine existed.
+
+**"How big is this problem? Is it just a Citi problem or does every bank face this?"**
+> Every bank that submits XBRL regulatory reports faces this — HSBC, Standard Chartered, DBS, every bank operating in India, Singapore, Hong Kong etc. The problem is industry-wide.
+
+**"How many reports does Citi currently submit and how many are pending?"**
+> Currently 3 reports are live. Six Basel III reports and other series are pending. At 2–4 weeks per report manually, that backlog alone justifies this engine.
+
+---
+
+## 💡 2. Understanding the Solution
+
+**"Why do you need AI for this? Can't you just write smarter Python/Java code?"**
+> You can handle simple cases with code, but real reports have ambiguous data type mappings, multi-dimensional context combinations, missing dimension mappings, and pipe transformations that require reasoning — not just rules. Every rule you hardcode needs updating when the taxonomy changes. LLM adapts automatically.
+
+**"What exactly does the LLM do vs what does the code do?"**
+> Code does 100% of the data extraction (deterministic, reliable). LLM only handles the intelligent mapping step — deciding correct context IDs, units, pipe transformations, and handling ambiguities. Java does the final conversion unchanged.
+
+**"What happens if the LLM generates a wrong template?"**
+> We have a self-correction loop. The system validates the generated template fact-by-fact against expected output. If accuracy is below 95%, it automatically feeds the errors back to the LLM for correction — up to 3 iterations. We've already validated 100% match on R396 and 89.1% on R322.
+
+**"Which LLM are you using? Are you locked into one vendor?"**
+> The engine is LLM-agnostic by design — it works with GPT-4, Claude, Gemini, or Devin. We deliberately avoided vendor lock-in so Citi can switch to whichever model performs best or is approved for enterprise use.
+
+---
+
+## 🔒 3. Security & Compliance
+
+**"You're sending bank data to an external LLM — isn't that a security risk?"**
+> This is a great question and a common concern. The LLM only receives the **taxonomy JSON and Excel spec** — both of which are provided by the regulator and contain **zero actual bank data**. Real financial figures only enter the picture in Layer 4 (Java), which runs entirely on Citi's internal infrastructure.
+
+**"What if the regulator changes the taxonomy — how quickly can you adapt?"**
+> That's exactly the problem we solve. Today it takes 2–4 weeks. With our engine, you re-run the Python extractors on the new taxonomy ZIP and Excel spec, feed the updated JSONs to the LLM, and get a new template in under 2 hours — zero code changes.
+
+**"Has this been validated against real production submissions?"**
+> Yes. We validated against R396 (100% fact match, 284 facts) and R322 (89.1% match, 763 out of 856 facts). These are real reports that Citi has already submitted to RBI in production.
+
+---
+
+## 📈 4. Business Impact & ROI
+
+**"What is the actual cost saving?"**
+> Each report currently requires 2–4 weeks of a specialized Java developer's time. With 100+ reports across 5 countries, that's potentially 200–400 weeks of developer time saved. The engine reduces per-report effort by 87–95%.
+
+**"You mentioned scaling to 100+ reports across 5 countries — how realistic is that?"**
+> Very realistic. The engine is report-agnostic — it takes any taxonomy ZIP + Excel spec as input. India (RBI), Singapore (MAS), Hong Kong (HKMA), Australia (APRA), Thailand (BOT) all use XBRL. Same engine, different taxonomy ZIP.
+
+**"What is the risk if this fails in production?"**
+> Low, because the existing Java XMLConverter is completely unchanged. If the AI-generated template has errors, the validation layer catches it before it ever reaches the Java converter. The existing system acts as a safety net.
+
+---
+
+## 🛠️ 5. Technical Feasibility
+
+**"How long would it take to go from this PoC to full production?"**
+> The roadmap has 6 phases across 12 weeks. Phase 0 (architecture) is already complete. The PoC (R419) is the hackathon demo. Full production with CLI tool and new report onboarding in under 2 hours is Phase 5.
+
+**"Why Python? Citi's existing system is Java — won't there be integration issues?"**
+> The Python engine outputs an XML file. That XML file is consumed by the existing Java XMLConverter exactly as before — no integration change needed. Python and Java are completely decoupled. Python was chosen because it's 3x faster to develop with for this kind of extraction and LLM integration work.
+
+**"What is the bus factor of this new system — are you creating a new dependency?"**
+> The old system had a bus factor of 2–3 specialized Java developers. Our engine eliminates that — anyone with the taxonomy ZIP and Excel spec can generate a template. The system itself is documented, open to any LLM, and the prompts are a reusable library.
+
+---
+
+## 🚀 6. Future & Vision
+
+**"Can this be productized and sold to other banks?"**
+> Absolutely — that's the broader vision. Every bank globally that files XBRL reports faces this exact problem. Citi could potentially license this as a regulatory tech (RegTech) product or open-source it to establish industry leadership.
+
+**"What's next after the Hackathon?"**
+> Phase 4 is cross-report validation — proving zero regression across all existing reports. Phase 5 is a CLI tool that onboards a brand new report in under 2 hours. Phase 6+ is expanding to RuleJSON automation using Formula XMLs from the taxonomy.
+
+**"What would you do with sponsorship money?"**
+> Infrastructure for running LLM API calls at scale, expanding taxonomy coverage across 5 countries, building a proper UI dashboard (the XGV UI shown in the demo), and potentially hiring to accelerate the production rollout.
+
+---
+
+## ⚠️ 7. Tough / Skeptical Questions
+
+**"89.1% accuracy on R322 is not 100% — is that good enough for regulatory filing?"**
+> For a PoC, 89.1% on a 856-fact report is strong. The self-correction loop is designed to close that gap. R396 already hits 100%. The target for production is ≥95% with zero manual intervention, and the remaining edge cases are being analyzed to improve the prompts.
+
+**"What prevents a competitor from building the same thing in 3 months?"**
+> Three things — deep Citi domain knowledge of RBI taxonomy quirks that generic tools miss, 3 already-validated production reports as training/benchmark data, and the existing Java XMLConverter framework that took years to build. A competitor starts from scratch on all three.
+
+**"What if regulators change the Excel spec format entirely and hidden cells are no longer used?"**
+> The Python extractors (Layer 2) are the only part that would need updating — and that's just one layer out of four. The LLM engine, Java converter, and validation layers are completely unaffected. Updating one extractor is far cheaper than rewriting report-specific Java code.
+
+---
+
+## 💬 Pro Tip for the Presentation
+
+The questions most likely to come first from a sponsor are:
+
+1. **Security** — *"Are you sending our data to OpenAI?"* → Answer this proactively in your demo
+2. **Accuracy** — *"89% is not 100%, how do you handle errors?"* → Show the self-correction loop
+3. **ROI** — *"What's the actual cost saving?"* → Have a number ready
+4. **Scalability** — *"Does this work for other countries?"* → Yes, LLM-agnostic + report-agnostic
+
+Would you like me to help you prepare **answers in presentation format** for any of these, or help you build a **demo script** for the hackathon? 🎯
