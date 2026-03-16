@@ -1,0 +1,260 @@
+{
+  "report": {
+    "code": "R419",
+    "name": "Basic Statistical Return - Advances",
+    "extractedFrom": "R419_Specification.xlsx",
+    "extractionMethod": "hidden_cells"
+  },
+
+  "config": {
+    "source": "StartUp Sheet (veryHidden)",
+    "reportingDate": "2026-03-31",
+    "entity": "Citi_India",
+    "decimalPlaces": 2,
+    "scaleFactor": 100000,
+    "dateFormat": "yyyy-MM-dd",
+    "mainSheet": "BSR_Advances"
+  },
+
+  "sheets": [
+    {
+      "sheetName": "BSR_Advances",
+      "sheetIndex": 0,
+      "visibility": "visible",
+      "description": "Main visible sheet - what the user sees",
+      "tables": ["T001", "T002"]
+    },
+    {
+      "sheetName": "Maturity_Profile",
+      "sheetIndex": 1,
+      "visibility": "visible",
+      "description": "Second visible sheet for maturity data",
+      "tables": ["T003"]
+    },
+    {
+      "sheetName": "+Lineitems",
+      "sheetIndex": 2,
+      "visibility": "veryHidden",
+      "description": "All row-axis concept references"
+    },
+    {
+      "sheetName": "+DynamicDomain",
+      "sheetIndex": 3,
+      "visibility": "veryHidden",
+      "description": "Dynamic dimension members"
+    },
+    {
+      "sheetName": "StartUp",
+      "sheetIndex": 4,
+      "visibility": "veryHidden",
+      "description": "Report config - date format, scale, decimals"
+    },
+    {
+      "sheetName": "Config",
+      "sheetIndex": 5,
+      "visibility": "veryHidden",
+      "description": "Report-level settings and metadata"
+    },
+    {
+      "sheetName": "MainSheet",
+      "sheetIndex": 6,
+      "visibility": "veryHidden",
+      "description": "Master mapping of sheet names to report sections"
+    }
+  ],
+
+  "tables": [
+    {
+      "tableId": "T001",
+      "layoutId": "Layout1",
+      "sourceSheet": "BSR_Advances",
+      "label": "Loans and Advances by Geography",
+      "startCell": "B3",
+      "endCell": "E8",
+      "tableMarker": "#TABLE#Layout1",
+      "markerFoundAt": "C3",
+
+      "columnAxis": [
+        { "excelColumn": "C", "conceptRef": "rbi:DomesticMember",  "label": "Domestic",  "hiddenRow": 2 },
+        { "excelColumn": "D", "conceptRef": "rbi:OverseasMember",   "label": "Overseas",  "hiddenRow": 2 },
+        { "excelColumn": "E", "conceptRef": "rbi:TotalMember",      "label": "Total",     "hiddenRow": 2 }
+      ],
+
+      "rows": [
+        {
+          "excelRow": 4,
+          "visibleLabel": "Loans to Priority Sector",
+          "hiddenColA": "rbi:LoansPrioritySector",
+          "hiddenColB": "rbi:GeographyDimension::rbi:DomesticMember",
+          "hiddenColC": "#TABLE#Layout1",
+          "cells": [
+            { "cellRef": "BSR_Advances<C4>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:DomesticMember", "contextRef": "Domestic_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D4>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:OverseasMember",  "contextRef": "Overseas_Q1_2026",  "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E4>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:TotalMember",     "contextRef": "Total_Q1_2026",     "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 5,
+          "visibleLabel": "Loans to Non-Priority Sector",
+          "hiddenColA": "rbi:LoansNonPrioritySector",
+          "hiddenColB": "rbi:GeographyDimension::rbi:DomesticMember",
+          "hiddenColC": "#TABLE#Layout1",
+          "cells": [
+            { "cellRef": "BSR_Advances<C5>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:DomesticMember", "contextRef": "Domestic_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D5>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:OverseasMember",  "contextRef": "Overseas_Q1_2026",  "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E5>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:GeographyDimension", "member": "rbi:TotalMember",     "contextRef": "Total_Q1_2026",     "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 6,
+          "visibleLabel": "Total Loans and Advances",
+          "hiddenColA": "rbi:TotalLoansAndAdvances",
+          "hiddenColB": "rbi:GeographyDimension::rbi:DomesticMember",
+          "hiddenColC": "#TABLE#Layout1",
+          "cells": [
+            { "cellRef": "BSR_Advances<C6>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:GeographyDimension", "member": "rbi:DomesticMember", "contextRef": "Domestic_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D6>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:GeographyDimension", "member": "rbi:OverseasMember",  "contextRef": "Overseas_Q1_2026",  "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E6>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:GeographyDimension", "member": "rbi:TotalMember",     "contextRef": "Total_Q1_2026",     "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 7,
+          "visibleLabel": "Gross NPA Amount",
+          "hiddenColA": "rbi:NPAGrossAmount",
+          "hiddenColB": "rbi:GeographyDimension::rbi:DomesticMember",
+          "hiddenColC": "#TABLE#Layout1",
+          "cells": [
+            { "cellRef": "BSR_Advances<C7>", "concept": "rbi:NPAGrossAmount", "dimension": "rbi:GeographyDimension", "member": "rbi:DomesticMember", "contextRef": "Domestic_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D7>", "concept": "rbi:NPAGrossAmount", "dimension": "rbi:GeographyDimension", "member": "rbi:OverseasMember",  "contextRef": "Overseas_Q1_2026",  "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E7>", "concept": "rbi:NPAGrossAmount", "dimension": "rbi:GeographyDimension", "member": "rbi:TotalMember",     "contextRef": "Total_Q1_2026",     "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 8,
+          "visibleLabel": "NPA Percentage",
+          "hiddenColA": "rbi:NPAPercentage",
+          "hiddenColB": "rbi:GeographyDimension::rbi:DomesticMember",
+          "hiddenColC": "#TABLE#Layout1",
+          "cells": [
+            { "cellRef": "BSR_Advances<C8>", "concept": "rbi:NPAPercentage", "dimension": "rbi:GeographyDimension", "member": "rbi:DomesticMember", "contextRef": "Domestic_Q1_2026", "unitRef": "PURE" },
+            { "cellRef": "BSR_Advances<D8>", "concept": "rbi:NPAPercentage", "dimension": "rbi:GeographyDimension", "member": "rbi:OverseasMember",  "contextRef": "Overseas_Q1_2026",  "unitRef": "PURE" },
+            { "cellRef": "BSR_Advances<E8>", "concept": "rbi:NPAPercentage", "dimension": "rbi:GeographyDimension", "member": "rbi:TotalMember",     "contextRef": "Total_Q1_2026",     "unitRef": "PURE" }
+          ]
+        }
+      ]
+    },
+
+    {
+      "tableId": "T002",
+      "layoutId": "Layout2",
+      "sourceSheet": "BSR_Advances",
+      "label": "Loans and Advances by Sector",
+      "startCell": "B12",
+      "endCell": "F15",
+      "tableMarker": "#TABLE#Layout2",
+      "markerFoundAt": "C12",
+
+      "columnAxis": [
+        { "excelColumn": "C", "conceptRef": "rbi:AgricultureMember", "label": "Agriculture", "hiddenRow": 11 },
+        { "excelColumn": "D", "conceptRef": "rbi:MSMEMember",        "label": "MSME",        "hiddenRow": 11 },
+        { "excelColumn": "E", "conceptRef": "rbi:RetailMember",      "label": "Retail",      "hiddenRow": 11 },
+        { "excelColumn": "F", "conceptRef": "rbi:CorporateMember",   "label": "Corporate",   "hiddenRow": 11 }
+      ],
+
+      "rows": [
+        {
+          "excelRow": 13,
+          "visibleLabel": "Loans to Priority Sector",
+          "hiddenColA": "rbi:LoansPrioritySector",
+          "hiddenColB": "rbi:SectorDimension::rbi:AgricultureMember",
+          "hiddenColC": "#TABLE#Layout2",
+          "cells": [
+            { "cellRef": "BSR_Advances<C13>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:AgricultureMember", "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D13>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:MSMEMember",        "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E13>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:RetailMember",      "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<F13>", "concept": "rbi:LoansPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:CorporateMember",   "contextRef": "Total_Q1_2026", "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 14,
+          "visibleLabel": "Loans to Non-Priority Sector",
+          "hiddenColA": "rbi:LoansNonPrioritySector",
+          "hiddenColB": "rbi:SectorDimension::rbi:AgricultureMember",
+          "hiddenColC": "#TABLE#Layout2",
+          "cells": [
+            { "cellRef": "BSR_Advances<C14>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:AgricultureMember", "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D14>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:MSMEMember",        "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E14>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:RetailMember",      "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<F14>", "concept": "rbi:LoansNonPrioritySector", "dimension": "rbi:SectorDimension", "member": "rbi:CorporateMember",   "contextRef": "Total_Q1_2026", "unitRef": "INR" }
+          ]
+        },
+        {
+          "excelRow": 15,
+          "visibleLabel": "Total Loans and Advances",
+          "hiddenColA": "rbi:TotalLoansAndAdvances",
+          "hiddenColB": "rbi:SectorDimension::rbi:AgricultureMember",
+          "hiddenColC": "#TABLE#Layout2",
+          "cells": [
+            { "cellRef": "BSR_Advances<C15>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:SectorDimension", "member": "rbi:AgricultureMember", "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<D15>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:SectorDimension", "member": "rbi:MSMEMember",        "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<E15>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:SectorDimension", "member": "rbi:RetailMember",      "contextRef": "Total_Q1_2026", "unitRef": "INR" },
+            { "cellRef": "BSR_Advances<F15>", "concept": "rbi:TotalLoansAndAdvances", "dimension": "rbi:SectorDimension", "member": "rbi:CorporateMember",   "contextRef": "Total_Q1_2026", "unitRef": "INR" }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "facts": [
+    {
+      "factId": "F001",
+      "cellRef": "BSR_Advances<C4>",
+      "concept": "rbi:LoansPrioritySector",
+      "contextRef": "Domestic_Q1_2026",
+      "unitRef": "INR",
+      "decimals": 2,
+      "templatePlaceholder": "${BSR_Advances<C4>}"
+    },
+    {
+      "factId": "F002",
+      "cellRef": "BSR_Advances<D4>",
+      "concept": "rbi:LoansPrioritySector",
+      "contextRef": "Overseas_Q1_2026",
+      "unitRef": "INR",
+      "decimals": 2,
+      "templatePlaceholder": "${BSR_Advances<D4>}"
+    },
+    {
+      "factId": "F003",
+      "cellRef": "BSR_Advances<E4>",
+      "concept": "rbi:LoansPrioritySector",
+      "contextRef": "Total_Q1_2026",
+      "unitRef": "INR",
+      "decimals": 2,
+      "templatePlaceholder": "${BSR_Advances<E4>}"
+    },
+    {
+      "factId": "F004",
+      "cellRef": "BSR_Advances<C8>",
+      "concept": "rbi:NPAPercentage",
+      "contextRef": "Domestic_Q1_2026",
+      "unitRef": "PURE",
+      "decimals": 4,
+      "templatePlaceholder": "${BSR_Advances<C8>}"
+    }
+  ],
+
+  "summary": {
+    "totalSheets": 7,
+    "visibleSheets": 2,
+    "veryHiddenSheets": 5,
+    "totalTables": 2,
+    "totalRows": 8,
+    "totalFacts": 112,
+    "taxonomyCrossValidation": {
+      "status": "passed",
+      "matchedConcepts": 8,
+      "unmatchedConcepts": 0
+    }
+  }
+}

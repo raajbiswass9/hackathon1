@@ -1,0 +1,285 @@
+{
+  "report": {
+    "code": "R419",
+    "name": "Basic Statistical Return - Advances",
+    "regulator": "RBI",
+    "country": "India",
+    "entryPoint": "reports/R419/entry.xsd",
+    "periodType": "quarterly",
+    "defaultConfig": {
+      "dateFormat": "yyyy-MM-dd",
+      "decimalPlaces": 2,
+      "scaleValues": 100000,
+      "currency": "INR",
+      "contextFormat": "underscore_separated"
+    }
+  },
+
+  "namespaces": {
+    "rbi": "http://www.rbi.org.in/xbrl/taxonomy/2024",
+    "xbrli": "http://www.xbrl.org/2003/instance",
+    "xbrldi": "http://xbrl.org/2006/xbrldi",
+    "iso4217": "http://www.xbrl.org/2003/iso4217",
+    "link": "http://www.xbrl.org/2003/linkbase"
+  },
+
+  "concepts": [
+    {
+      "id": "C001",
+      "name": "rbi:LoansPrioritySector",
+      "label": "Loans to Priority Sector",
+      "dataType": "xbrli:monetaryItemType",
+      "periodType": "instant",
+      "balance": "debit",
+      "unit": "iso4217:INR",
+      "decimals": 2,
+      "nillable": false
+    },
+    {
+      "id": "C002",
+      "name": "rbi:LoansNonPrioritySector",
+      "label": "Loans to Non-Priority Sector",
+      "dataType": "xbrli:monetaryItemType",
+      "periodType": "instant",
+      "balance": "debit",
+      "unit": "iso4217:INR",
+      "decimals": 2,
+      "nillable": false
+    },
+    {
+      "id": "C003",
+      "name": "rbi:TotalLoansAndAdvances",
+      "label": "Total Loans and Advances",
+      "dataType": "xbrli:monetaryItemType",
+      "periodType": "instant",
+      "balance": "debit",
+      "unit": "iso4217:INR",
+      "decimals": 2,
+      "nillable": false
+    },
+    {
+      "id": "C004",
+      "name": "rbi:NPAGrossAmount",
+      "label": "Gross NPA Amount",
+      "dataType": "xbrli:monetaryItemType",
+      "periodType": "instant",
+      "balance": "debit",
+      "unit": "iso4217:INR",
+      "decimals": 2,
+      "nillable": false
+    },
+    {
+      "id": "C005",
+      "name": "rbi:NPAPercentage",
+      "label": "NPA as Percentage of Total Advances",
+      "dataType": "xbrli:pureItemType",
+      "periodType": "instant",
+      "balance": null,
+      "unit": "xbrli:pure",
+      "decimals": 4,
+      "nillable": false
+    },
+    {
+      "id": "C006",
+      "name": "rbi:InterestIncomeOnAdvances",
+      "label": "Interest Income on Advances",
+      "dataType": "xbrli:monetaryItemType",
+      "periodType": "duration",
+      "balance": "credit",
+      "unit": "iso4217:INR",
+      "decimals": 2,
+      "nillable": false
+    },
+    {
+      "id": "C007",
+      "name": "rbi:NumberOfBorrowerAccounts",
+      "label": "Number of Borrower Accounts",
+      "dataType": "xbrli:integerItemType",
+      "periodType": "instant",
+      "balance": null,
+      "unit": null,
+      "decimals": 0,
+      "nillable": false
+    },
+    {
+      "id": "C008",
+      "name": "rbi:WeightedAverageInterestRate",
+      "label": "Weighted Average Interest Rate",
+      "dataType": "xbrli:pureItemType",
+      "periodType": "instant",
+      "balance": null,
+      "unit": "xbrli:pure",
+      "decimals": 4,
+      "nillable": true
+    }
+  ],
+
+  "dimensions": [
+    {
+      "id": "D001",
+      "name": "rbi:GeographyDimension",
+      "label": "Geography",
+      "type": "explicit",
+      "members": [
+        {
+          "name": "rbi:DomesticMember",
+          "label": "Domestic"
+        },
+        {
+          "name": "rbi:OverseasMember",
+          "label": "Overseas"
+        },
+        {
+          "name": "rbi:TotalMember",
+          "label": "Total"
+        }
+      ]
+    },
+    {
+      "id": "D002",
+      "name": "rbi:SectorDimension",
+      "label": "Sector Type",
+      "type": "explicit",
+      "members": [
+        {
+          "name": "rbi:AgricultureMember",
+          "label": "Agriculture"
+        },
+        {
+          "name": "rbi:MSMEMember",
+          "label": "Micro Small Medium Enterprises"
+        },
+        {
+          "name": "rbi:RetailMember",
+          "label": "Retail"
+        },
+        {
+          "name": "rbi:CorporateMember",
+          "label": "Corporate"
+        }
+      ]
+    },
+    {
+      "id": "D003",
+      "name": "rbi:MaturityDimension",
+      "label": "Maturity Bucket",
+      "type": "explicit",
+      "members": [
+        {
+          "name": "rbi:Maturity0to1YearMember",
+          "label": "0 to 1 Year"
+        },
+        {
+          "name": "rbi:Maturity1to3YearMember",
+          "label": "1 to 3 Years"
+        },
+        {
+          "name": "rbi:MaturityAbove3YearMember",
+          "label": "Above 3 Years"
+        }
+      ]
+    }
+  ],
+
+  "tables": [
+    {
+      "id": "T001",
+      "name": "rbi:Table_LoansAndAdvancesByGeography",
+      "label": "Loans and Advances by Geography",
+      "layoutId": "Layout1",
+      "rowAxis": {
+        "concepts": ["C001", "C002", "C003", "C004", "C005"]
+      },
+      "columnAxis": {
+        "dimension": "D001",
+        "members": ["rbi:DomesticMember", "rbi:OverseasMember", "rbi:TotalMember"]
+      }
+    },
+    {
+      "id": "T002",
+      "name": "rbi:Table_LoansAndAdvancesBySector",
+      "label": "Loans and Advances by Sector",
+      "layoutId": "Layout2",
+      "rowAxis": {
+        "concepts": ["C001", "C002", "C003"]
+      },
+      "columnAxis": {
+        "dimension": "D002",
+        "members": ["rbi:AgricultureMember", "rbi:MSMEMember", "rbi:RetailMember", "rbi:CorporateMember"]
+      }
+    },
+    {
+      "id": "T003",
+      "name": "rbi:Table_LoansAndAdvancesByMaturity",
+      "label": "Loans and Advances by Maturity Bucket",
+      "layoutId": "Layout3",
+      "rowAxis": {
+        "concepts": ["C003", "C006", "C007", "C008"]
+      },
+      "columnAxis": {
+        "dimension": "D003",
+        "members": ["rbi:Maturity0to1YearMember", "rbi:Maturity1to3YearMember", "rbi:MaturityAbove3YearMember"]
+      }
+    }
+  ],
+
+  "contexts": [
+    {
+      "id": "CTX001",
+      "ref": "Domestic_Q1_2026",
+      "entity": "Citi_India",
+      "period": {
+        "type": "instant",
+        "date": "2026-03-31"
+      },
+      "dimensions": {
+        "rbi:GeographyDimension": "rbi:DomesticMember"
+      }
+    },
+    {
+      "id": "CTX002",
+      "ref": "Overseas_Q1_2026",
+      "entity": "Citi_India",
+      "period": {
+        "type": "instant",
+        "date": "2026-03-31"
+      },
+      "dimensions": {
+        "rbi:GeographyDimension": "rbi:OverseasMember"
+      }
+    },
+    {
+      "id": "CTX003",
+      "ref": "Total_Q1_2026",
+      "entity": "Citi_India",
+      "period": {
+        "type": "instant",
+        "date": "2026-03-31"
+      },
+      "dimensions": {
+        "rbi:GeographyDimension": "rbi:TotalMember"
+      }
+    }
+  ],
+
+  "units": [
+    {
+      "id": "U001",
+      "ref": "INR",
+      "measure": "iso4217:INR"
+    },
+    {
+      "id": "U002",
+      "ref": "PURE",
+      "measure": "xbrli:pure"
+    }
+  ],
+
+  "summary": {
+    "totalConcepts": 8,
+    "totalDimensions": 3,
+    "totalTables": 3,
+    "totalContexts": 3,
+    "totalFacts": 112
+  }
+}
